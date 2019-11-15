@@ -13,8 +13,15 @@ public class BinaryTreeAlgorithms {
      * @return A Collection containing the node payloads in traversal order.
      */
     public static <T> List<T> preOrder(BinaryNode<T> root) {
-        /* YOUR CODE HERE */
-        return null;
+        //
+        List<T> returnList = new ArrayList<>();
+        if (root == null){
+            return null;
+        }
+        returnList.add(root.payload);
+        returnList.addAll(preOrder(root.left));
+        returnList.addAll(preOrder(root.right));
+        return returnList;
     }
 
     /**
@@ -23,9 +30,18 @@ public class BinaryTreeAlgorithms {
      * @param <T> Type of node payload.
      * @return A Collection containing the node payloads in traversal order.
      */
+
     public static <T> List<T> inOrder(BinaryNode<T> root) {
-        /* YOUR CODE HERE */
-        return null;
+        //
+        List<T> returnList = new ArrayList<T>();
+        if (root == null){
+            return null;
+        }
+        returnList.addAll(inOrder(root.left));
+        returnList.add(root.payload);
+        returnList.addAll(inOrder(root.right));
+        return returnList;
+
     }
 
     /**
@@ -35,8 +51,15 @@ public class BinaryTreeAlgorithms {
      * @return A Collection containing the node payloads in traversal order.
      */
     public static <T> List<T> postOrder(BinaryNode<T> root) {
-        /* YOUR CODE HERE */
-        return null;
+        //
+        List<T> returnList = new ArrayList<>();
+        if (root == null){
+            return null;
+        }
+        returnList.addAll(postOrder(root.left));
+        returnList.addAll(postOrder(root.right));
+        returnList.add(root.payload);
+        return returnList;
     }
 
     /**
@@ -46,8 +69,11 @@ public class BinaryTreeAlgorithms {
      * @return The node containing the value, or null if the value is not present in the tree.
      */
     public static BinaryNode<Integer> binarySearch(BinaryNode<Integer> root, Integer value) {
-        /* YOUR CODE HERE */
-        return null;
+        //
+        if (root==null) {
+            return null;
+        }
+
     }
 
     /**
