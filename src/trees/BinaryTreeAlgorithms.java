@@ -63,7 +63,7 @@ public class BinaryTreeAlgorithms {
     }
 
     /**
-     * Conduct a binary search on a binary search tree for a target value.
+     * Conduct a binary seach on a binary search tree for a target value.
      * @param root Root of the binary search tree.
      * @param value The value to search for.
      * @return The node containing the value, or null if the value is not present in the tree.
