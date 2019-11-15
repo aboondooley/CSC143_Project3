@@ -14,13 +14,13 @@ public class BinaryTreeAlgorithms {
      */
     public static <T> List<T> preOrder(BinaryNode<T> root) {
         //
-        List<T> returnList = new ArrayList<>();
+        List<T> returnList = new LinkedList<>();
         if (root == null){
             return null;
         }
         returnList.add(root.payload);
-        returnList.addAll(preOrder(root.left));
-        returnList.addAll(preOrder(root.right));
+        preOrder(root.left);
+        preOrder(root.right);
         return returnList;
     }
 
@@ -33,13 +33,13 @@ public class BinaryTreeAlgorithms {
 
     public static <T> List<T> inOrder(BinaryNode<T> root) {
         //
-        List<T> returnList = new ArrayList<T>();
+        List<T> returnList = new LinkedList<T>();
         if (root == null){
             return null;
         }
-        returnList.addAll(inOrder(root.left));
+        inOrder(root.left);
         returnList.add(root.payload);
-        returnList.addAll(inOrder(root.right));
+        inOrder(root.right);
         return returnList;
 
     }
@@ -52,12 +52,12 @@ public class BinaryTreeAlgorithms {
      */
     public static <T> List<T> postOrder(BinaryNode<T> root) {
         //
-        List<T> returnList = new ArrayList<>();
+        List<T> returnList = new LinkedList<>();
         if (root == null){
             return null;
         }
-        returnList.addAll(postOrder(root.left));
-        returnList.addAll(postOrder(root.right));
+        postOrder(root.left);
+        postOrder(root.right);
         returnList.add(root.payload);
         return returnList;
     }
@@ -73,7 +73,7 @@ public class BinaryTreeAlgorithms {
         if (root==null) {
             return null;
         }
-
+        return null;
     }
 
     /**
