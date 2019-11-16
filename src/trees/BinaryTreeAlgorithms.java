@@ -25,7 +25,7 @@ public class BinaryTreeAlgorithms {
         // Cannot append null to a list
         List<T> returnList = new LinkedList<>();
         preOrderHelper(root, returnList);
-        System.out.println(returnList.toString());
+        //System.out.println(returnList.toString());
         return returnList;
     }
 
@@ -36,12 +36,22 @@ public class BinaryTreeAlgorithms {
      * @return A Collection containing the node payloads in traversal order.
      */
 
+    public static <T> void inOrderHelper(BinaryNode<T> root, List<T> returnList){
+        if (root == null){
+            return;
+        }
+        inOrderHelper(root.left, returnList);
+        returnList.add(root.payload);
+        inOrderHelper(root.right, returnList);
+    }
+
+
     public static <T> List<T> inOrder(BinaryNode<T> root) {
         //
         List<T> returnList = new LinkedList<T>();
-        if (root == null){
-            return null;
-        }
+        inOrderHelper(root, returnList);
+        return returnList;
+
         /*
         This doesn't work as it appends null to the list :/
         returnList.addAll(inOrder(root.left));
@@ -49,12 +59,13 @@ public class BinaryTreeAlgorithms {
         returnList.addAll(inOrder(root.right));
         return returnList;
 
-         */
+
         inOrder(root.left);
         returnList.add(root.payload);
         System.out.println(returnList.toString());
         inOrder(root.right);
         return null;
+                 */
     }
 
     /**
@@ -63,15 +74,20 @@ public class BinaryTreeAlgorithms {
      * @param <T> Type of node payload.
      * @return A Collection containing the node payloads in traversal order.
      */
+
+    public static <T> void postOrderHelper(BinaryNode<T> root, List<T> returnList){
+        if (root == null){
+            return;
+        }
+        postOrderHelper(root.left, returnList);
+        postOrderHelper(root.right, returnList);
+        returnList.add(root.payload);
+    }
+
     public static <T> List<T> postOrder(BinaryNode<T> root) {
         //
         List<T> returnList = new LinkedList<>();
-        if (root == null){
-            return null;
-        }
-        postOrder(root.left);
-        postOrder(root.right);
-        returnList.add(root.payload);
+        postOrderHelper(root, returnList);
         return returnList;
     }
 
@@ -83,10 +99,14 @@ public class BinaryTreeAlgorithms {
      */
     public static BinaryNode<Integer> binarySearch(BinaryNode<Integer> root, Integer value) {
         //
-        if (root==null) {
-            return null;
+        if (root==null || root.payload==value) {
+            return root;
         }
-        return null;
+        if (root.payload>value){
+             return binarySearch(root.left, value);
+        } else {
+            return binarySearch(root.right, value);
+        }
     }
 
     /**
@@ -96,8 +116,17 @@ public class BinaryTreeAlgorithms {
      * @return The BinaryNode containing the newly inserted value, or an existing BinaryNode with an equal value.
      */
     public static BinaryNode<Integer> insert(BinaryNode<Integer> root, Integer value) {
-        /* YOUR CODE HERE */
-        return null;
+        //
+         if (root == null| root.payload==value){
+             root.payload = value;
+             return root;
+         }
+         if (root.left.payload > value){
+             insert(root.left, value);
+         }
+         insert(root.right, value);
+
+        return root;
     }
 
     /**
@@ -107,8 +136,21 @@ public class BinaryTreeAlgorithms {
      * @return True or false depending on the equality of the two trees.
      */
     public static boolean equals(BinaryNode<Integer> A, BinaryNode<Integer> B) {
-        /* YOUR CODE HERE */
-        return false;
+        //
+        if (A == B){
+            return true;
+        }
+        List<Integer> aList = inOrder(A);
+        List<Integer> bList = inOrder(B);
+        if (aList.size()!=bList.size()){
+            return false;
+        }
+        for (int i=0; i < aList.size(); i++){
+            if (aList.get(i)!=bList.get(i)){
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
