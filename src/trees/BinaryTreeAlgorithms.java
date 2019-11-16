@@ -24,8 +24,16 @@ public class BinaryTreeAlgorithms {
     public static <T> List<T> preOrder(BinaryNode<T> root) {
         // Cannot append null to a list
         List<T> returnList = new LinkedList<>();
+        /*
         preOrderHelper(root, returnList);
         //System.out.println(returnList.toString());
+         */
+        if (root==null){
+            return null;
+        }
+        returnList.add(root.payload);
+        if (root.left!=null){returnList.addAll(preOrder(root.left));}
+        if (root.right!=null){returnList.addAll(preOrder(root.right));}
         return returnList;
     }
 
@@ -47,7 +55,7 @@ public class BinaryTreeAlgorithms {
 
 
     public static <T> List<T> inOrder(BinaryNode<T> root) {
-        //
+        /*
         List<T> returnList = new LinkedList<T>();
         inOrderHelper(root, returnList);
         return returnList;
@@ -66,6 +74,14 @@ public class BinaryTreeAlgorithms {
         inOrder(root.right);
         return null;
                  */
+        List<T> returnList = new LinkedList<>();
+        if (root==null){
+            return null;
+        }
+        if (root.left!=null){returnList.addAll(inOrder(root.left));}
+        returnList.add(root.payload);
+        if (root.right!=null){returnList.addAll(inOrder(root.right));}
+        return returnList;
     }
 
     /**
@@ -79,6 +95,7 @@ public class BinaryTreeAlgorithms {
         if (root == null){
             return;
         }
+        //if(root.left!=null){returnList.addAll(postOrder(root.left));}
         postOrderHelper(root.left, returnList);
         postOrderHelper(root.right, returnList);
         returnList.add(root.payload);
@@ -87,7 +104,12 @@ public class BinaryTreeAlgorithms {
     public static <T> List<T> postOrder(BinaryNode<T> root) {
         //
         List<T> returnList = new LinkedList<>();
-        postOrderHelper(root, returnList);
+        if (root==null){
+            return null;
+        }
+        if (root.left!=null){returnList.addAll(postOrder(root.left));}
+        if (root.right!=null){returnList.addAll(postOrder(root.right));}
+        returnList.add(root.payload);
         return returnList;
     }
 
@@ -117,16 +139,27 @@ public class BinaryTreeAlgorithms {
      */
     public static BinaryNode<Integer> insert(BinaryNode<Integer> root, Integer value) {
         //
-         if (root == null| root.payload==value){
-             root.payload = value;
+         if (root == null){
+             root = new BinaryNode<>(value);
              return root;
          }
-         if (root.left.payload > value){
-             insert(root.left, value);
+         if (root.payload==value){
+             return root;
          }
-         insert(root.right, value);
+         if (value < root.payload){
+             if (root.left == null){
+                 root.left = new BinaryNode<>(value);
+                 return root.left;
+             }
+             return insert(root.left, value);
+         } else {
+             if (root.right == null) {
+                 root.right = new BinaryNode<>(value);
+                 return root.right;
+             }
+             return insert(root.right, value);
+         }
 
-        return root;
     }
 
     /**
