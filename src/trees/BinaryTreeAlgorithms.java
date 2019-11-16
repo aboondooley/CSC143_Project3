@@ -12,15 +12,20 @@ public class BinaryTreeAlgorithms {
      * @param <T> Type of node payload.
      * @return A Collection containing the node payloads in traversal order.
      */
-    public static <T> List<T> preOrder(BinaryNode<T> root) {
-        //
-        List<T> returnList = new LinkedList<>();
+    public static <T> void preOrderHelper(BinaryNode<T> root, List<T> returnList){
         if (root == null){
-            return null;
+            return;
         }
         returnList.add(root.payload);
-        preOrder(root.left);
-        preOrder(root.right);
+        preOrderHelper(root.left, returnList);
+        preOrderHelper(root.right, returnList);
+    }
+
+    public static <T> List<T> preOrder(BinaryNode<T> root) {
+        // Cannot append null to a list
+        List<T> returnList = new LinkedList<>();
+        preOrderHelper(root, returnList);
+        System.out.println(returnList.toString());
         return returnList;
     }
 
@@ -37,11 +42,19 @@ public class BinaryTreeAlgorithms {
         if (root == null){
             return null;
         }
-        inOrder(root.left);
+        /*
+        This doesn't work as it appends null to the list :/
+        returnList.addAll(inOrder(root.left));
         returnList.add(root.payload);
-        inOrder(root.right);
+        returnList.addAll(inOrder(root.right));
         return returnList;
 
+         */
+        inOrder(root.left);
+        returnList.add(root.payload);
+        System.out.println(returnList.toString());
+        inOrder(root.right);
+        return null;
     }
 
     /**
