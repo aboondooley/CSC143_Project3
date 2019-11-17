@@ -9,8 +9,17 @@ public class TreeAlgorithms {
      * @return The maximum Integer contained in the tree; null if the root is null.
      */
     public static Integer max(TreeNode<Integer> root) {
-        /* YOUR CODE HERE */
-        return null;
+        //
+        if (root == null) { return null; }
+        Integer max_val = root.payload;
+        if (root.children == null){
+            return root.payload;
+        }
+
+        for (TreeNode<Integer> child : root.children){
+            max_val = Math.max(max(child), max_val);
+        }
+        return max_val;
     }
 
     /**
@@ -19,8 +28,16 @@ public class TreeAlgorithms {
      * @return The minimum Integer contained in the tree; null if the root is null.
      */
     public static Integer min(TreeNode<Integer> root) {
-        /* YOUR CODE HERE */
-        return null;
+        //
+        if (root == null) { return null; }
+        if (root.children == null){
+            return root.payload;
+        }
+        Integer min_val = root.payload;
+        for (TreeNode<Integer> child : root.children){
+            min_val = Math.min(min(child), min_val);
+        }
+        return min_val;
     }
 
     /**
@@ -29,8 +46,17 @@ public class TreeAlgorithms {
      * @return A LinkedList of leaf TreeNodes from the tree.
      */
     public static LinkedList<TreeNode<Integer>> leaves(TreeNode<Integer> root) {
-        /* YOUR CODE HERE */
-        return null;
+        //
+        LinkedList<TreeNode<Integer>> returnList= new LinkedList<>();
+        if (root == null ) { return returnList; }
+        if (root.children.size()==0){
+            returnList.add(root);
+            return returnList;
+        }
+        for (TreeNode<Integer> child : root.children){
+            returnList.addAll(leaves(child));
+        }
+        return returnList;
     }
 
     /**
@@ -39,8 +65,18 @@ public class TreeAlgorithms {
      * @return
      */
     public static int count(TreeNode<Integer> root) {
-        /* YOUR CODE HERE */
-        return -1;
+        //
+        int nodeNumber = 0;
+        // int prevNumber = 0;
+        if (root == null){return 0;}
+        if (root.children.size()==0){return 1;}
+        for (TreeNode<Integer> child : root.children){
+            nodeNumber = nodeNumber + count(child);
+           // prevNumber = root.children.size();
+            //nodeNumber = prevNumber + count(child);
+        }
+        nodeNumber++; // for the root
+        return nodeNumber;
     }
 
     /**
@@ -51,8 +87,20 @@ public class TreeAlgorithms {
      * @return The depth (height) of the tree.
      */
     public static <T> int depth(TreeNode<T> root) {
-        /* YOUR CODE HERE */
-        return -1;
+        //
+        int height = 0;
+        int intDepth = 0;
+        if (root == null){return 0;}
+        if (root.children.size()==0){return 0;}
+        //if (height==0){height++;}
+        for (TreeNode<T> child : root.children){
+           // height = 1;
+            height = height + Math.max(height, depth(child));
+            // prevNumber = root.children.size();
+            //nodeNumber = prevNumber + count(child);
+        }
+        //height++; // for the root
+        return height;
     }
 
     /**
