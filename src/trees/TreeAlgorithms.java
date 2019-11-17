@@ -88,19 +88,19 @@ public class TreeAlgorithms {
      */
     public static <T> int depth(TreeNode<T> root) {
         //
+       // int intDepth = 0;
         int height = 0;
-        int intDepth = 0;
         if (root == null){return 0;}
-        if (root.children.size()==0){return 0;}
-        //if (height==0){height++;}
+        if (root.children==null||root.children.size()==0){return 0;}
+        //if (height==0&root.children.size()>0){height=1;}
         for (TreeNode<T> child : root.children){
            // height = 1;
-            height = height + Math.max(height, depth(child));
+            height = Math.max(height, depth(child));
             // prevNumber = root.children.size();
             //nodeNumber = prevNumber + count(child);
         }
         //height++; // for the root
-        return height;
+        return height + 1;
     }
 
     /**
