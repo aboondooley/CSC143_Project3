@@ -170,18 +170,13 @@ public class BinaryTreeAlgorithms {
      */
     public static boolean equals(BinaryNode<Integer> A, BinaryNode<Integer> B) {
         //
-        if (A == B){
-            return true;
-        }
+        if (A == B){ return true; }
+        if (A == null & B == null){ return true; }
         List<Integer> aList = inOrder(A);
         List<Integer> bList = inOrder(B);
-        if (aList.size()!=bList.size()){
-            return false;
-        }
+        if (aList.size()!=bList.size()){ return false; }
         for (int i=0; i < aList.size(); i++){
-            if (aList.get(i)!=bList.get(i)){
-                return false;
-            }
+            if (aList.get(i)!=bList.get(i)){ return false; }
         }
         return true;
     }
