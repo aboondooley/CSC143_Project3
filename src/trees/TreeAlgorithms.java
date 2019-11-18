@@ -111,8 +111,15 @@ public class TreeAlgorithms {
      * @return True or false depending on the equality of the two trees.
      */
     public static <T> boolean equals(TreeNode<T> A, TreeNode<T> B) {
-        /* YOUR CODE HERE */
-        return false;
+        //
+        if (A==B){return true;}
+        if(A.payload!=B.payload||A.children.size()!=B.children.size()){return false;}
+        for (int i=0; i<A.children.size(); i++){
+            if (A.getChild(i).payload != B.getChild(i).payload){
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
