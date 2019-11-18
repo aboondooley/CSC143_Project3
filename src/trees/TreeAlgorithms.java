@@ -132,8 +132,24 @@ public class TreeAlgorithms {
      * @return List of elements in the tree, in order of BFS search.
      */
     public static LinkedList<Integer> bfs(TreeNode<Integer> root) {
-        /* YOUR CODE HERE */
-        return null;
+        //
+        LinkedList<Integer> returnList = new LinkedList<>();
+        if (root==null){return returnList;}
+        Queue<TreeNode<Integer>> queue = new LinkedList<>();
+        queue.add(root);
+        returnList.add(root.payload);
+        TreeNode<Integer> current;
+        while(!queue.isEmpty()){
+            current = queue.remove();
+            for (TreeNode<Integer> child : current.children) {
+                returnList.add(child.payload);
+                if (child.children.size() > 0) {
+                    queue.add(child);
+                }
+            }
+        }
+
+        return returnList;
     }
 
     /**
