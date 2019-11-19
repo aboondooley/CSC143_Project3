@@ -12,22 +12,10 @@ public class BinaryTreeAlgorithms {
      * @param <T> Type of node payload.
      * @return A Collection containing the node payloads in traversal order.
      */
-    public static <T> void preOrderHelper(BinaryNode<T> root, List<T> returnList){
-        if (root == null){
-            return;
-        }
-        returnList.add(root.payload);
-        preOrderHelper(root.left, returnList);
-        preOrderHelper(root.right, returnList);
-    }
 
     public static <T> List<T> preOrder(BinaryNode<T> root) {
         // Cannot append null to a list
         List<T> returnList = new LinkedList<>();
-        /*
-        preOrderHelper(root, returnList);
-        //System.out.println(returnList.toString());
-         */
         if (root==null){
             return null;
         }
@@ -44,36 +32,8 @@ public class BinaryTreeAlgorithms {
      * @return A Collection containing the node payloads in traversal order.
      */
 
-    public static <T> void inOrderHelper(BinaryNode<T> root, List<T> returnList){
-        if (root == null){
-            return;
-        }
-        inOrderHelper(root.left, returnList);
-        returnList.add(root.payload);
-        inOrderHelper(root.right, returnList);
-    }
-
-
     public static <T> List<T> inOrder(BinaryNode<T> root) {
-        /*
-        List<T> returnList = new LinkedList<T>();
-        inOrderHelper(root, returnList);
-        return returnList;
-
-        /*
-        This doesn't work as it appends null to the list :/
-        returnList.addAll(inOrder(root.left));
-        returnList.add(root.payload);
-        returnList.addAll(inOrder(root.right));
-        return returnList;
-
-
-        inOrder(root.left);
-        returnList.add(root.payload);
-        System.out.println(returnList.toString());
-        inOrder(root.right);
-        return null;
-                 */
+        //
         List<T> returnList = new LinkedList<>();
         if (root==null){
             return null;
@@ -90,16 +50,6 @@ public class BinaryTreeAlgorithms {
      * @param <T> Type of node payload.
      * @return A Collection containing the node payloads in traversal order.
      */
-
-    public static <T> void postOrderHelper(BinaryNode<T> root, List<T> returnList){
-        if (root == null){
-            return;
-        }
-        //if(root.left!=null){returnList.addAll(postOrder(root.left));}
-        postOrderHelper(root.left, returnList);
-        postOrderHelper(root.right, returnList);
-        returnList.add(root.payload);
-    }
 
     public static <T> List<T> postOrder(BinaryNode<T> root) {
         //
