@@ -111,11 +111,12 @@ public class TreeAlgorithms {
      * @return True or false depending on the equality of the two trees.
      */
     public static <T> boolean equals(TreeNode<T> A, TreeNode<T> B) {
-        //
-        if (A==B){return true;}
+
         if(A.payload!=B.payload||A.children.size()!=B.children.size()){return false;}
         for (int i=0; i<A.children.size(); i++){
-            if (A.getChild(i).payload != B.getChild(i).payload){
+            if (equals(A.getChild(i), B.getChild(i))){
+                return true;
+            } else {
                 return false;
             }
         }
@@ -167,7 +168,22 @@ public class TreeAlgorithms {
      * If the target element is not present in the tree, return an empty list.
      */
     public static <T> LinkedList<TreeNode<T>> path(TreeNode<T> root, T value) {
-        /* YOUR CODE HERE */
-        return null;
+        //
+        LinkedList<TreeNode<T>> returnList = new LinkedList<>();
+        if (root==null){return returnList;}
+        if (root.payload==value){
+            returnList.add(root);
+            return returnList;
+        }
+        for (TreeNode<T> child : root.children){
+            LinkedList<TreeNode<T>> values = path(child, value);
+            if (values.size()>0){
+                returnList.add(root);
+                returnList.addAll(values);
+            }
+
+        }
+
+        return returnList;
     }
 }
