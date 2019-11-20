@@ -120,15 +120,22 @@ public class BinaryTreeAlgorithms {
      */
     public static boolean equals(BinaryNode<Integer> A, BinaryNode<Integer> B) {
         //
-        if (A == B){ return true; }
-        if (A == null & B == null){ return true; }
-        List<Integer> aList = inOrder(A);
-        List<Integer> bList = inOrder(B);
-        if (aList.size()!=bList.size()){ return false; }
-        for (int i=0; i < aList.size(); i++){
-            if (aList.get(i)!=bList.get(i)){ return false; }
-        }
-        return true;
+        boolean pay_val = false;
+        boolean side_val = false;
+
+        if (A.payload==B.payload){pay_val= true;}
+        if (A.left==null&&B.left==null){
+            side_val = true;
+        } else if (A.left!=null&&B.left!=null){
+            side_val = equals(A.left, B.left);
+        } else {side_val = false;}
+        if (A.right==null&&B.right==null){
+            side_val = true;
+        } else if (A.right!=null&&B.right!=null){
+            side_val = equals(A.right, B.right);
+        } else {side_val = false;}
+
+        return side_val&&pay_val;
     }
 
     /**
@@ -151,7 +158,30 @@ public class BinaryTreeAlgorithms {
      * If the target value is not present in the tree, return null.
      */
     public static <T> LinkedList<BinaryNode.Direction> path(BinaryNode<T> root, T value) {
-        /* YOUR CODE HERE */
-        return null;
+        //
+        LinkedList<BinaryNode.Direction> returnList = new LinkedList<>();
+        if (root==null){
+            return null;
+        }
+        if (root.left!=null&&root.left.payload==value){
+            returnList.add(BinaryNode.Direction.left);
+        }
+        if (root.right!=null&&root.right.payload==value){
+            returnList.add(BinaryNode.Direction.right);
+        }
+        if (root.left!=null){
+            returnList.addAll(path(root.left, value));
+            if (returnList.size()>0&&root.left.payload!=value&&root.right.payload!=value){
+                returnList.addFirst(BinaryNode.Direction.left);
+            }
+        }
+        if (root.right!=null){
+            returnList.addAll(path(root.right, value));
+            if (returnList.size()>0&&root.right.payload!=value&&root.left.payload!=value){
+                returnList.addFirst(BinaryNode.Direction.right);
+            }
+        }
+
+        return returnList;
     }
 }
