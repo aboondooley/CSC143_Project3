@@ -9,14 +9,16 @@ public class TreeAlgorithms {
      * @return The maximum Integer contained in the tree; null if the root is null.
      */
     public static Integer max(TreeNode<Integer> root) {
-        //
+        // Returns the max value in the whole tree.
         if (root == null) { return null; }
         Integer max_val = root.payload;
         if (root.children == null){
+            // If the node has no children, return the node value
             return root.payload;
         }
-
+        // This solution has a O(n) at worst because we have to check each node.
         for (TreeNode<Integer> child : root.children){
+            // Compare the returned value to the current max value
             max_val = Math.max(max(child), max_val);
         }
         return max_val;
@@ -28,14 +30,16 @@ public class TreeAlgorithms {
      * @return The minimum Integer contained in the tree; null if the root is null.
      */
     public static Integer min(TreeNode<Integer> root) {
-        //
+        // Finds the minimum value of the entire tree
         if (root == null) { return null; }
         if (root.children == null){
             return root.payload;
         }
         Integer min_val = root.payload;
         for (TreeNode<Integer> child : root.children){
+            // Compares the returned value to the current min value
             min_val = Math.min(min(child), min_val);
+            // Need to differentiate between math.min() vs min()
         }
         return min_val;
     }
@@ -46,14 +50,16 @@ public class TreeAlgorithms {
      * @return A LinkedList of leaf TreeNodes from the tree.
      */
     public static LinkedList<TreeNode<Integer>> leaves(TreeNode<Integer> root) {
-        //
+        // Returns only nodes with no children i.e. only the leaves
         LinkedList<TreeNode<Integer>> returnList= new LinkedList<>();
         if (root == null ) { return returnList; }
         if (root.children.size()==0){
+            // If no children exist, this is a leaf, so add to the return list
             returnList.add(root);
             return returnList;
         }
         for (TreeNode<Integer> child : root.children){
+            // recurse through all the children
             returnList.addAll(leaves(child));
         }
         return returnList;
@@ -65,17 +71,16 @@ public class TreeAlgorithms {
      * @return
      */
     public static int count(TreeNode<Integer> root) {
-        //
+        // Counts the number of nodes in the entire tree
+        // By virtue of the purpose of this method it has to be O(n)
         int nodeNumber = 0;
-        // int prevNumber = 0;
         if (root == null){return 0;}
+        // If no children exist then just return one for the root.
         if (root.children.size()==0){return 1;}
         for (TreeNode<Integer> child : root.children){
             nodeNumber = nodeNumber + count(child);
-           // prevNumber = root.children.size();
-            //nodeNumber = prevNumber + count(child);
         }
-        nodeNumber++; // for the root
+        nodeNumber++; // adds all the values of the nodes on the way back up
         return nodeNumber;
     }
 
@@ -87,20 +92,16 @@ public class TreeAlgorithms {
      * @return The depth (height) of the tree.
      */
     public static <T> int depth(TreeNode<T> root) {
-        //
-       // int intDepth = 0;
-        int height = 0;
+        // Counts the number of levels of children that exist
+        int height = 0; // start at 0
         if (root == null){return 0;}
-        if (root.children==null||root.children.size()==0){return 0;}
-        //if (height==0&root.children.size()>0){height=1;}
+        if (root.children==null||root.children.size()==0){return 0;} // if no children return 0 as well
         for (TreeNode<T> child : root.children){
-           // height = 1;
+            // compares the current height with those returned by other children
+            // keeps the max height
             height = Math.max(height, depth(child));
-            // prevNumber = root.children.size();
-            //nodeNumber = prevNumber + count(child);
         }
-        //height++; // for the root
-        return height + 1;
+        return height + 1; // Add one for the current level
     }
 
     /**
@@ -111,13 +112,15 @@ public class TreeAlgorithms {
      * @return True or false depending on the equality of the two trees.
      */
     public static <T> boolean equals(TreeNode<T> A, TreeNode<T> B) {
-
+        // Compares two trees to see if they are exactly the same in structure and payload values
         if(A.payload!=B.payload||A.children.size()!=B.children.size()){return false;}
         for (int i=0; i<A.children.size(); i++){
+            // uses recursion to compare each child in the tree
+            // Also an O(n) operation at worst.
             if (equals(A.getChild(i), B.getChild(i))){
                 return true;
             } else {
-                return false;
+                return false; // returns early if two nodes don't match
             }
         }
         return true;
@@ -133,18 +136,24 @@ public class TreeAlgorithms {
      * @return List of elements in the tree, in order of BFS search.
      */
     public static LinkedList<Integer> bfs(TreeNode<Integer> root) {
-        //
+        // Traverses the nodes in depth order from left to right
+        // Called breadth first
         LinkedList<Integer> returnList = new LinkedList<>();
         if (root==null){return returnList;}
+        // Create a queue to save all the nodes with children so they can
+        // Be traversed at a later time
         Queue<TreeNode<Integer>> queue = new LinkedList<>();
+        // pop off and add root node first.
         queue.add(root);
         returnList.add(root.payload);
         TreeNode<Integer> current;
         while(!queue.isEmpty()){
+            // continue through the queue of children while it's not empty
             current = queue.remove();
             for (TreeNode<Integer> child : current.children) {
                 returnList.add(child.payload);
                 if (child.children.size() > 0) {
+                    // If the child has children, add this child to the queue to be traversed later
                     queue.add(child);
                 }
             }
@@ -168,7 +177,7 @@ public class TreeAlgorithms {
      * If the target element is not present in the tree, return an empty list.
      */
     public static <T> LinkedList<TreeNode<T>> path(TreeNode<T> root, T value) {
-        //
+        // Creates a list of nodes that create a path to the node specified.
         LinkedList<TreeNode<T>> returnList = new LinkedList<>();
         if (root==null){return returnList;}
         if (root.payload==value){
@@ -178,6 +187,8 @@ public class TreeAlgorithms {
         for (TreeNode<T> child : root.children){
             LinkedList<TreeNode<T>> values = path(child, value);
             if (values.size()>0){
+                // if the list is greater than 0 then we know that we are on the right path
+                // and we add the current node to the front of our return list
                 returnList.addFirst(root);
                 returnList.addAll(values);
             }

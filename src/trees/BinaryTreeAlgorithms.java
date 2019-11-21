@@ -163,25 +163,36 @@ public class BinaryTreeAlgorithms {
         if (root==null){
             return null;
         }
-        if (root.left!=null&&root.left.payload==value){
-            returnList.add(BinaryNode.Direction.left);
-        }
-        if (root.right!=null&&root.right.payload==value){
-            returnList.add(BinaryNode.Direction.right);
+        if (root.payload==value){
+            return returnList;
         }
         if (root.left!=null){
-            returnList.addAll(path(root.left, value));
-            if (returnList.size()>0&&root.left.payload!=value&&root.right.payload!=value){
-                returnList.addFirst(BinaryNode.Direction.left);
+            if (root.left.payload==value) {
+                returnList.add(BinaryNode.Direction.left);
+                return returnList;
             }
+            LinkedList<BinaryNode.Direction> i = (path(root.left, value));
+            if (i != null){
+                returnList.add(BinaryNode.Direction.left);
+                returnList.addAll(i);
+            }
+
         }
+
         if (root.right!=null){
-            returnList.addAll(path(root.right, value));
-            if (returnList.size()>0&&root.right.payload!=value&&root.left.payload!=value){
-                returnList.addFirst(BinaryNode.Direction.right);
+            if (root.right.payload==value) {
+                returnList.add(BinaryNode.Direction.right);
+                return returnList;
+            }
+
+            LinkedList<BinaryNode.Direction> i = (path(root.right, value));
+            if (i != null){
+                returnList.add(BinaryNode.Direction.right);
+                returnList.addAll(i);
             }
         }
 
+        if (returnList.size()==0){return null;}
         return returnList;
     }
 }
