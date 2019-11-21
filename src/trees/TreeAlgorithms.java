@@ -178,10 +178,9 @@ public class TreeAlgorithms {
         for (TreeNode<T> child : root.children){
             LinkedList<TreeNode<T>> values = path(child, value);
             if (values.size()>0){
-                returnList.add(root);
+                returnList.addFirst(root);
                 returnList.addAll(values);
             }
-
         }
 
         return returnList;
