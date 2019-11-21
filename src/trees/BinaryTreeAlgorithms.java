@@ -14,7 +14,7 @@ public class BinaryTreeAlgorithms {
      */
 
     public static <T> List<T> preOrder(BinaryNode<T> root) {
-        // Cannot append null to a list
+        // Returns root, left, right
         List<T> returnList = new LinkedList<>();
         if (root==null){
             return null;
@@ -33,7 +33,7 @@ public class BinaryTreeAlgorithms {
      */
 
     public static <T> List<T> inOrder(BinaryNode<T> root) {
-        //
+        // Returns left, root, right
         List<T> returnList = new LinkedList<>();
         if (root==null){
             return null;
@@ -52,7 +52,7 @@ public class BinaryTreeAlgorithms {
      */
 
     public static <T> List<T> postOrder(BinaryNode<T> root) {
-        //
+        // Returns left, right, root
         List<T> returnList = new LinkedList<>();
         if (root==null){
             return null;
@@ -70,13 +70,13 @@ public class BinaryTreeAlgorithms {
      * @return The node containing the value, or null if the value is not present in the tree.
      */
     public static BinaryNode<Integer> binarySearch(BinaryNode<Integer> root, Integer value) {
-        //
+        // Returns the node with the value of interest from a Binary Search Tree
         if (root==null || root.payload==value) {
             return root;
         }
-        if (root.payload>value){
+        if (root.payload>value){  // if value is less than payload, go left
              return binarySearch(root.left, value);
-        } else {
+        } else { // value is greater than payload
             return binarySearch(root.right, value);
         }
     }
@@ -88,22 +88,23 @@ public class BinaryTreeAlgorithms {
      * @return The BinaryNode containing the newly inserted value, or an existing BinaryNode with an equal value.
      */
     public static BinaryNode<Integer> insert(BinaryNode<Integer> root, Integer value) {
-        //
+        // Inserts the specific node at it's correct location, if it doesn't already exist there
+        // Also return the node
          if (root == null){
-             root = new BinaryNode<>(value);
+             root = new BinaryNode<>(value); // create node if the root is null
              return root;
          }
          if (root.payload==value){
              return root;
          }
-         if (value < root.payload){
+         if (value < root.payload){ // if value is less than payload, go left
              if (root.left == null){
                  root.left = new BinaryNode<>(value);
                  return root.left;
              }
              return insert(root.left, value);
          } else {
-             if (root.right == null) {
+             if (root.right == null) { // if value is greater than payload, go right
                  root.right = new BinaryNode<>(value);
                  return root.right;
              }
@@ -119,13 +120,14 @@ public class BinaryTreeAlgorithms {
      * @return True or false depending on the equality of the two trees.
      */
     public static boolean equals(BinaryNode<Integer> A, BinaryNode<Integer> B) {
-        //
-        boolean pay_val = false;
-        boolean side_val = false;
+        // This method compares two Binary Trees recursively and returns if they are
+        // equal in structure and value
+        boolean pay_val = false; // this is for values
+        boolean side_val = false; // this is to see if the side nodes are the same
 
-        if (A.payload==B.payload){pay_val= true;}
+        if (A.payload==B.payload){pay_val= true;} // set to whether the payloads are equal
         if (A.left==null&&B.left==null){
-            side_val = true;
+            side_val = true; // set the other indicator
         } else if (A.left!=null&&B.left!=null){
             side_val = equals(A.left, B.left);
         } else {side_val = false;}
@@ -135,7 +137,7 @@ public class BinaryTreeAlgorithms {
             side_val = equals(A.right, B.right);
         } else {side_val = false;}
 
-        return side_val&&pay_val;
+        return side_val&&pay_val; // return whether either are false
     }
 
     /**
@@ -158,41 +160,45 @@ public class BinaryTreeAlgorithms {
      * If the target value is not present in the tree, return null.
      */
     public static <T> LinkedList<BinaryNode.Direction> path(BinaryNode<T> root, T value) {
-        //
+        // Returns the directions that lead to the target value
         LinkedList<BinaryNode.Direction> returnList = new LinkedList<>();
         if (root==null){
             return null;
         }
         if (root.payload==value){
+            // return empty if the value matches
             return returnList;
         }
-        if (root.left!=null){
+        if (root.left!=null){ // avoid NullPointerException
             if (root.left.payload==value) {
+                // if the last node contained the value, add left to returnList
                 returnList.add(BinaryNode.Direction.left);
                 return returnList;
             }
-            LinkedList<BinaryNode.Direction> i = (path(root.left, value));
-            if (i != null){
+            // Have to preview what is being returned first
+            // Unfortunately this means O(n^2)
+            LinkedList<BinaryNode.Direction> i = path(root.left, value);
+            if (i.size()>0){
+                // If that result was not empty, then add left to the front, then add the rest of the directions list
                 returnList.add(BinaryNode.Direction.left);
                 returnList.addAll(i);
             }
-
         }
 
-        if (root.right!=null){
+        if (root.right!=null){ // avoid NPE
             if (root.right.payload==value) {
+                // if the last node contained the value, add right to returnList
                 returnList.add(BinaryNode.Direction.right);
                 return returnList;
             }
 
-            LinkedList<BinaryNode.Direction> i = (path(root.right, value));
-            if (i != null){
+            LinkedList<BinaryNode.Direction> i = path(root.right, value);
+            if (i.size()>0){
                 returnList.add(BinaryNode.Direction.right);
                 returnList.addAll(i);
             }
         }
-
-        if (returnList.size()==0){return null;}
+        // finally, return the list!
         return returnList;
     }
 }
